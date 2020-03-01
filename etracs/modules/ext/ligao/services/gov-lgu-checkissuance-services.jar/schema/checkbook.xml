@@ -1,0 +1,18 @@
+<schema adapter="checkissuance">
+	<element tablename="checkbook">
+		<field name="objid" primary="true" prefix="CB"/>
+		<field name="state" required="true" defaultValue="DRAFT" caption="State" indexed="true"/>
+		<field name="bankaccount_objid" required="true" />
+		<field name="bankaccount_code" required="true" caption="Acct No." searchable="true" indexed="true" />
+		<field name="bankaccount_title" required="true" caption="Acct Title" />
+		<field name="bankaccount_bank_code" required="true" caption="Bank" indexed="true" />
+		<field name="bankaccount_bank_name" required="true" caption="Bank Name" />
+		<field name="bankaccount_fund_objid" required="true" />
+		<field name="bankaccount_fund_code" required="true" />
+		<field name="bankaccount_fund_title" required="true" caption="Fund" indexed="true" />
+		<field name="stubno" required="true" type="integer" caption="Stub No." searchable="true" indexed="true" />
+		<field name="startseries" required="true" type="integer" caption="Start Series" indexed="true" />
+		<field name="endseries" required="true" type="integer" caption="End Series" indexed="true" />
+		<field name="currentseries" required="true" type="integer" caption="Current Series" searchable="true" indexed="true" />
+	</element>
+</schema>

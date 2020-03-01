@@ -1,0 +1,5 @@
+dialect=mssql
+driverClass=com.microsoft.sqlserver.jdbc.SQLServerDriver
+url=jdbc:sqlserver://${checkissuanceds_host};DatabaseName=${checkissuanceds_maindb}
+user=${checkissuanceds_user}
+pwd=${checkissuanceds_pass}

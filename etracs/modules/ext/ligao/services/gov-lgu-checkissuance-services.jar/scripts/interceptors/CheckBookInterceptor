@@ -1,0 +1,33 @@
+import com.rameses.common.*
+import com.rameses.annotations.*
+
+class CheckBookInterceptor
+{
+	@Before(pattern="PersistenceService.(create|update|save)", eval="args[0]._schemaname=='checkbook'")
+	public void beforeSave(ei){
+		def checkbook = ei.args[0]
+		validateCheckBook(checkbook)
+	}
+
+	void validateCheckBook(checkbook){
+		def qty = 50 //qty per checkbook
+
+		if (checkbook.startseries !=1){
+		//get the remainder
+		def rem = checkbook.startseries % qty
+		if (rem !=1)
+		throw new Exception('Start series is invalid. Please verify.')
+		}
+
+		checkbook.endseries = checkbook.startseries + qty - 1
+
+		if (checkbook.currentseries < checkbook.startseries||
+			checkbook.currentseries > checkbook.endseries){
+			def msg = 'Current series should be between '
+			msg += checkbook.startseries + ' and '
+			msg += checkbook.endseries + '.'
+			throw new Exception(msg)
+		}
+	}
+
+}

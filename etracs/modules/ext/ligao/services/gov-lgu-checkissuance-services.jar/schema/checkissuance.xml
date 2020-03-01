@@ -1,0 +1,25 @@
+<schema adapter="checkissuance">
+	<element tablename="checkissuance">
+		<field name="objid" primary="true" prefix="CI" />
+		<field name="state" required="true" defaultValue="POSTED" caption="State" indexed="true" />
+		<field name="checkbook_objid" required="true" />
+		<field name="checkno" required="true" caption="Check No." searchable="true" indexed="true"/>
+		<field name="checkdate" required="true" caption="Check Date" />
+		<field name="payee_objid" required="true" />
+		<field name="payee_name" required="true" caption="Payee" searchable="true" indexed="true"/>
+		<field name="payee_address" required="true" />
+		<field name="particulars" required="true" caption="Particulars" />
+		<field name="amount" required="true" type="decimal" caption="Amount" />
+		<field name="gross"  type="decimal" caption="Gross" />
+		<field name="retention" type="decimal" caption="Retention" />
+		<field name="tax" type="decimal" caption="Tax" />
+		<field name="office"  caption="Office" />
+		<field name="fpp"  caption="F.P.P." />
+		<field name="acctcode"  caption="Acct Code" />
+		<field name="alobs"  caption="Alobs" />
+		<field name="voucher" caption="Voucher" />
+		<complex name="checkbook" ref="checkbook" jointype="many-to-one" includefield="bankaccount.code,bankaccount.title,backaccount.bankaccount.bank.code,bankaccount.fund.title">
+			<key field="checkbook_objid" target="objid"/>
+		</complex>
+	</element>
+</schema>

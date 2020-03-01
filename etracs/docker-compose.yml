@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  
+  download-server:
+    image: nginx:latest
+    container_name: download-server
+    restart: always
+    logging:
+      driver: "json-file"
+      options: 
+        max-file: "5"
+        max-size: 10m
+    environment:
+      TZ: "Asia/Manila"
+    ports:
+      - "81:80"
+    volumes:
+      - ../download/conf.d:/etc/nginx/conf.d
+      - ../download/resources:/resources
+      - ../_custom/static_files:/resources/others
+
+
+  etracs25-server:
+    image: ramesesinc/etracs25-server-city:255.02.005
+    container_name: etracs25-server
+    restart: always
+    logging:
+      driver: "json-file"
+      options: 
+        max-file: "5"
+        max-size: 10m
+    env_file:
+      - ./env.conf
+      - ../_custom/env.conf
+    ports:
+      - "8060:8060"
+      - "8061:8061"
+      - "8070:8070"
+      - "8080:8080"
+    volumes:
+      - ../_res/connections:/apps/etracs25/connections/ext
+      - ./datasources:/services/datasources
+      - ./modules:/apps/etracs25/modules

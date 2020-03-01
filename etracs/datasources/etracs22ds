@@ -1,0 +1,5 @@
+dialect=mssql
+driverClass=com.microsoft.sqlserver.jdbc.SQLServerDriver
+url=jdbc:sqlserver://${etracs22ds_host};DatabaseName=${etracs22ds_maindb}
+user=${etracs22ds_user}
+pwd=${etracs22ds_pass}
