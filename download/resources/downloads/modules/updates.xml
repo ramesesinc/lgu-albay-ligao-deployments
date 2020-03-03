@@ -1,6 +1,6 @@
 <app>
 <env>
-app.title=ETRACS 2.5 build 05 20200301_2305 (CITY OF LIGAO)
+app.title=ETRACS 2.5 build 05 20200303_1834 (CITY OF LIGAO)
 app.host=localhost:8070
 app.cluster=osiris3
 app.context=etracs25
@@ -91,6 +91,17 @@ entity.app.context=etracs25
 	<module file="queue/rameses-queueing.jar" version="2.50"/>
 
 	<!-- ctc -->
-	<module file="ctc/rameses-gov-etracs-ctc.jar" version="2.50"/>	
+	<module file="v254-ctc/rameses-gov-etracs-ctc.jar" version="2.06"/>
+
+	<!-- ovs -->
+	<module file="v254-ovs/rameses-gov-ovs.jar" version="1.01"/>
+
+	<!-- market -->
+	<module file="v254-market/rameses-gov-etracs-market.jar" version="1.4"/>
+
+	<!-- vehicle -->
+	<module file="v254-vehicle/rameses-gov-etracs-vehicle.jar" version="1.01"/> 
+	<module file="v254-vehicle/rameses-gov-etracs-vehicle-tricycle.jar" version="1.01"/> 
+	<module file="v254-vehicle/rameses-gov-etracs-vehicle-pedicab.jar" version="1.01"/> 
 </modules>
 </app>
