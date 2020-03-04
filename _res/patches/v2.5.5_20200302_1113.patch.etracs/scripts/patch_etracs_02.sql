@@ -422,3 +422,10 @@ alter table collectionvoucher add constraint fk_collectionvoucher_depositvoucher
 	foreign key (depositvoucherid) references depositvoucher (objid) 
 go 
 
+
+
+alter table lob add psic_objid varchar(50) null 
+go 
+create index ix_psic_objid on lob (psic_objid) 
+go 
+
