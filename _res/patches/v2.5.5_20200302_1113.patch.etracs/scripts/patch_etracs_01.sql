@@ -502,7 +502,7 @@ go
 
 alter table collectiontype alter column [fund_objid] varchar(100) NULL 
 go 
-alter table collectiontype alter column [info] text NULL 
+alter table collectiontype add [info] text NULL 
 go 
 
 alter table collectiontype_account alter column [defaultvalue] decimal(16,2) NULL
