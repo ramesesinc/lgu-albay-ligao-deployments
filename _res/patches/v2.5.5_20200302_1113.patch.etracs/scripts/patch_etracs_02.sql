@@ -98,6 +98,8 @@ alter table sys_rule_action_param add constraint fk_sys_rule_action_param_parent
 	foreign key (parentid) references sys_rule_action (objid) 
 go 
 
+alter table sys_rule_action_param alter column actiondefparam_objid varchar(255) null 
+go 
 
 update aa set 
 	aa.actiondefparam_objid = null 
@@ -267,11 +269,6 @@ alter table sys_rulegroup add constraint fk_sys_rulegroup_ruleset
 go 
 
 
-alter table lobattribute add constraint pk_lobattribute primary key (objid) 
-go 
-create unique index uix_name on lobattribute (name) 
-go 
-
 if object_id('dbo.ztmp_lobattribute', 'U') IS NOT NULL 
   drop table dbo.ztmp_lobattribute; 
 go 
@@ -305,9 +302,6 @@ go
 alter table lobattribute add constraint pk_lobattribute primary key (objid) 
 go 
 create unique index uix_name on lobattribute (name) 
-go 
-
-alter table lob_lobattribute add constraint pk_lob_lobattribute primary key (lobid, lobattributeid)
 go 
 
 
@@ -377,7 +371,7 @@ alter table entityjuridical add constraint fk_entityjuridical_objid
 	foreign key (objid) references entity (objid)
 go 
 
-select * from entityindividual where objid not in (
+delete from entityindividual where objid not in (
 	select objid from entity 
 	where objid = entityindividual.objid
 ) 
