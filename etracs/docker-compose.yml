@@ -22,7 +22,7 @@ services:
 
 
   etracs25-server:
-    image: ramesesinc/etracs25-server-city:255.02.006
+    image: ramesesinc/etracs25-server-city:255.02.007
     container_name: etracs25-server
     restart: always
     logging:
@@ -42,3 +42,9 @@ services:
       - ../_res/connections:/apps/etracs25/connections/ext
       - ./datasources:/services/datasources
       - ./modules:/apps/etracs25/modules
+
+      - ./dev_modules/gov:/gov
+      - ./dev_modules/gov/etracs__gov.conf:/apps/etracs25/modules.conf.d/etracs__gov.conf
+
+      - ./dev_modules/bpls:/bpls
+      - ./dev_modules/bpls/etracs_bpls.conf:/apps/etracs25/modules.conf.d/etracs_bpls.conf
