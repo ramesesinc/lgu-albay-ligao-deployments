@@ -1,22 +1,22 @@
 <app>
 <env>
-app.title=ETRACS 2.5 build 05 20200303_1834 (CITY OF LIGAO)
-app.host=192.168.1.3:8070
+app.title=ETRACS 2.5 build 05 20200506_1617 (CITY OF LIGAO)
+app.host=192.168.2.3:8070
 app.cluster=osiris3
 app.context=etracs25
-app.help=http://192.168.1.3:8080/help
+app.help=http://192.168.2.3:8080/help
 app.loader=com.rameses.osiris2.client.OsirisAppLoader
 readTimeout=300000
 connectionTimeout=5000
 
 report.custom=ligao
 
-ws.host=192.168.1.3:8060
-#res.host=192.168.1.3
+ws.host=192.168.2.3:8060
+#res.host=192.168.2.3
 
-socketio.host=192.168.1.3:7080
+socketio.host=192.168.2.3:7080
 
-entity.app.host=192.168.1.3:8070
+entity.app.host=192.168.2.3:8070
 entity.app.context=etracs25
 </env>
 <modules> 
