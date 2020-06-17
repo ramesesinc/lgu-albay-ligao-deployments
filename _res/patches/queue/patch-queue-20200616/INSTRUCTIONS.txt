@@ -1,0 +1,39 @@
+---------------------
+DEPLOYMENT PROCEDURES
+---------------------
+
+1. On windows desktop, press WIN + R to open the Run dialog screen
+
+2. Type: \\192.168.2.3
+
+3. Right click the folder "lguligao"  
+   and choose "Map network drive..." let us say "Z" 
+   uncheck the setting "Reconnect" and click "OK" 
+
+4. Copy the folder "{PATCH_DIR}/_custom" to folder "z:/docker" 
+   Merge and overwrite existing files and folders
+
+5. Open Git Bash and login remotely to linux server
+
+6. Execute the following commands to get the latest updates: 
+
+   $  cd ~/docker/bin
+
+   $  sh pull-updates.sh
+
+
+7. Restart the queue container 
+
+   $  sh restart-queue.sh
+
+
+8. The location of your audio for queueing is located in 
+   the folder "z:/docker/_custom/queue/audio" 
+
+   You can replace the sound of "ding.mp3" and 
+   the file name will always remain as "ding.mp3"
+
+   After you have change the audio be sure to refresh  
+   the browser of your TV monitor.
+
+9. Done   
