@@ -9,6 +9,9 @@ class RPTCertificationOnlineService {
 	@Service('Var')
 	def var
 
+	@Service('RPTUtil')
+	def util
+
 	@Service('EntityService')
 	def entitySvc
 
@@ -184,21 +187,20 @@ class RPTCertificationOnlineService {
 		required('refdate', params.refdate);
 		required('purpose', params.purpose);
 
-		def currYear = dtSvc.getServerYear()
-		def currQtr = dtSvc.getServerQtr()
+		def year = dtSvc.getServerYear()
 		params.certid = 'RC' + new java.rmi.server.UID()
 
 		def reporttype = null;
 
 		params.faases.each {
 			validateFaas(it)
-			def ledger = getLedger(it)
+			def ledger = em_ledger.select('lastyearpaid,lastqtrpaid,taxable,totalav,txntype.objid').find([faasid: it.objid]).first()
 			if (ledger) {
 				it.rptcertificationid = params.certid 
 				it.refid = it.objid
 				it.putAll(ledger)
 
-				if (ledger.taxable == 0) {
+				if (!util.isTrue(ledger.taxable)) {
 					reporttype = [name: 'exempt', title: 'EXEMPT']
 				} else if (ledger.totalav == 0) {
 					reporttype = [name: 'zerovalue', title: 'ZERO VALUE']
@@ -231,9 +233,9 @@ class RPTCertificationOnlineService {
         	certifiedby      : 'SYSTEM',
         	certifiedbytitle : 'SYSTEM',
         	purpose          : params.purpose,
-			asofyear         : (currQtr == 1 ? currYear - 1 : currYear),
-			year 			 : (currQtr == 1 ? currYear - 1 : currYear),
-			qtr 			 : (currQtr == 1 ? 4 : currQtr - 1),
+			asofyear         : year,
+			year 			 : year,
+			qtr 			 : 4,
 			items 			 : params.faases,
         	oramount         : 0.0,
         	stampamount      : 0.0,
@@ -280,7 +282,6 @@ class RPTCertificationOnlineService {
 	}
 
 	void validateFaas(entity) {
-		println 'entity => ' + entity
 		def fields = 'objid,state,effectivityyear,taxpayer.objid,taxpayer.name,taxpayer.address.text,administrator.name,administrator.address'
 		def faas = em_faas.select(fields).find([objid: entity.objid]).first()
 		if (!faas) {
@@ -293,18 +294,6 @@ class RPTCertificationOnlineService {
 		}
 		if (!faas) throw new Exception('FAAS ' + entity.tdno + ' does not exist or has been deleted.')
 		if (faas.state.matches('INTERIM|PENDING')) throw new Exception('FAAS ' + entity.tdno + ' is not yet approved.')
-	}
-
-	def getLedger(faas) {
-		def fields = 'lastyearpaid,lastqtrpaid,taxable,totalav,txntype.objid'
-		def ledger = em_ledger.select(fields).find([faasid: faas.objid]).first()
-		if (!ledger) {
-			ledger = em_ledger.select(fields).find([tdno: faas.objid]).first()
-		}
-		if (!ledger) {
-			ledger = em_ledger.select(fields).find([tdno: faas.tdno]).first()
-		}
-		return ledger
 	}
 
 	def getOnlineCert(params, certtype) {

@@ -77,7 +77,7 @@ public class RPTLedgerRuleService
 
 		if (util.isTrue(var.rptledger_rule_include_ledger_faases)) {
 			faases.each {
-				facts << new RPTLedgerFaasFact(it)
+					facts << new RPTLedgerFaasFact(it)
 			}
 		}
 
@@ -94,15 +94,22 @@ public class RPTLedgerRuleService
 		    item.sefav = item.av 
 		    item.taxdifference = faas.taxdifference 
 
-		    def params = [ledger: ledger, faases: faases, ledgerfaas: faas, yr: yr, av: item.av]
+		    def params = [
+							ledger: ledger, faases: faases, ledgerfaas: faas, yr: yr, av: item.av,
+							classification: faas.classification,
+							actualuse: faas.actualuse
+						]
+
 		    ledgerSvc.calcLedgerItemAssessedValue(params)
 		    item.av = params.av 
+				item.basicav = params.basicav
+		    item.sefav = params.sefav
 		    item.idleland = faas.idleland
 
 		    def classification = new Classification(faas.classification)
-			def actualuse = new Classification(faas.actualuse)
-			facts << classification
-			facts << actualuse
+			   def actualuse = new ActualUse(faas.actualuse)
+			   facts << classification
+			   facts << actualuse
 		    facts << new AssessedValue(item, classification, actualuse)
 		}
 
@@ -120,6 +127,8 @@ public class RPTLedgerRuleService
 		actions.addCommand('add-sh', new AddTax(request:request, revtype:'sh', priority:2000))
 		actions.addCommand('add-firecode', new AddTax(request:request, revtype:'firecode', priority:1000))
 		actions.addCommand('update-av', new UpdateAV(numSvc:numSvc))
+		actions.addCommand('update-basicav', new UpdateBasicAV(numSvc:numSvc))
+		actions.addCommand('update-sefav', new UpdateSefAV(numSvc:numSvc))
 		actions.addCommand('calc-tax', new CalcTax(numSvc:numSvc))
 		actions.addCommand('apply-incentive', new ApplyIncentive(numSvc:numSvc))
 		return actions 
