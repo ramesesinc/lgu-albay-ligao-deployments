@@ -51,3 +51,6 @@ services:
 
       - ./dev_modules/rptis:/rptis
       - ./dev_modules/rptis/etracs_rptis.conf:/apps/etracs25/modules.conf.d/etracs_rptis.conf
+
+      - ./dev_connections/sms:/apps/notification/connections/sms
+      - ./dev_modules/sms-notification-services.jar:/services/modules/notification/sms-notification-services.jar
