@@ -4,7 +4,7 @@ public class AssessedValue
 {
     String objid
     Classification classification 
-    Classification actualuse 
+    ActualUse actualuse 
     String rputype
     String txntype 
     Integer year

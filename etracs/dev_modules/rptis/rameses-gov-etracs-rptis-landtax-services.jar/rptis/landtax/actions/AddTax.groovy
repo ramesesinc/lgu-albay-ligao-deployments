@@ -20,6 +20,10 @@ public class AddTax implements RuleActionHandler {
 		item.av = params.av.getDecimalValue()
 		item.basicav = (params.basicav ? params.basicav.getDecimalValue() : item.av)
 		item.sefav = (params.sefav ? params.sefav.getDecimalValue() : item.av)
+
+		if (item.basicav == null) item.basicav = 0.0
+		if (item.sefav == null) item.sefav = 0.0
+
 		item.classification = avfact.classification.objid 
 		item.actualuse = avfact.actualuse.objid 
 		item.idleland = avfact.idleland
