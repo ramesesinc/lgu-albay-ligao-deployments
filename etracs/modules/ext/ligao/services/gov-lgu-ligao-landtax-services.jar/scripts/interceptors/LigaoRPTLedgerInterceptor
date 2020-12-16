@@ -1,0 +1,16 @@
+import com.rameses.annotations.*;
+
+class LigaoRPTLedgerInterceptor {
+	@DataContext("entity")
+	def em_entity
+
+	@After( pattern="RPTLedgerService.buildMessageList", index=100 ) 
+	public void afterBuildMessage( event ) { 
+		def ledger = event.result; 
+		def entity = em_entity.select('mobileno,email').find([objid: ledger.taxpayer.objid]).first();
+		if (entity && !entity.mobileno) {
+			ledger._messagelist << 'Mobile no. is not registered.'
+		}
+	} 
+
+}
